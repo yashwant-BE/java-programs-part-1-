@@ -1,0 +1,186 @@
+electricity bill program 
+import java.util.Scanner;
+
+public class ElectricityBillGenerator {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the Electricity Bill Generator!");
+
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+
+        System.out.print("Enter customer ID: ");
+        int customerId = scanner.nextInt();
+
+        System.out.print("Enter previous month reading: ");
+        double previousReading = scanner.nextDouble();
+
+        System.out.print("Enter current month reading: ");
+        double currentReading = scanner.nextDouble();
+
+        System.out.println("\nElectricity Bill\n");
+        System.out.println("Customer Name: " + customerName);
+        System.out.println("Customer ID: " + customerId);
+        System.out.println("Previous Month Reading: " + previousReading);
+        System.out.println("Current Month Reading: " + currentReading);
+
+        double unitsConsumed = currentReading - previousReading;
+        double totalBillAmount = calculateBill(unitsConsumed);
+
+        System.out.println("Total Units Consumed: " + unitsConsumed);
+        System.out.println("Total Bill Amount: " + totalBillAmount);
+    }
+
+    public static double calculateBill(double unitsConsumed) {
+        // Perform the calculation of the bill based on units consumed
+        // You can use your own logic here, this is just a sample calculation
+        double perUnitCost = 5.0; // Assuming cost per unit is $5
+        return unitsConsumed * perUnitCost;
+    }
+}
+
+kth smallest code 
+public class KthSmallestElement {
+
+    public static void main(String[] args) {
+        int[] array = {7, 10, 4, 3, 20, 15};
+        int k = 3; // Find the 3rd smallest element
+
+        int result = findKthSmallestElement(array, k);
+
+        System.out.println("The " + k + "th smallest element is: " + result);
+    }
+
+    public static int findKthSmallestElement(int[] array, int k) {
+        if (array == null || array.length < k) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        int left = 0;
+        int right = array.length - 1;
+
+        while (left <= right) {
+            int pivotIndex = partition(array, left, right);
+
+            if (pivotIndex == k - 1) {
+                return array[pivotIndex];
+            } else if (pivotIndex < k - 1) {
+                left = pivotIndex + 1;
+            } else {
+                right = pivotIndex - 1;
+            }
+        }
+
+        return -1; // Kth smallest element not found
+    }
+
+    public static int partition(int[] array, int left, int right) {
+        int pivot = array[right];
+        int i = left;
+
+        for (int j = left; j < right; j++) {
+            if (array[j] <= pivot) {
+                swap(array, i, j);
+                i++;
+            }
+        }
+
+        swap(array, i, right);
+
+        return i;
+    }
+
+    public static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+array of numbers system
+public class SubarrayWithGivenSum {
+
+    public static void main(String[] args) {
+        int[] array = {5, 12, 8, 6, 10, 3, 1};
+        int targetSum = 22;
+
+        int[] result = findSubarrayWithGivenSum(array, targetSum);
+
+        if (result != null) {
+            System.out.println("Subarray with sum " + targetSum + " found:");
+            for (int i = result[0]; i <= result[1]; i++) {
+                System.out.print(array[i] + " ");
+            }
+        } else {
+            System.out.println("No subarray found with sum " + targetSum);
+        }
+    }
+
+    public static int[] findSubarrayWithGivenSum(int[] array, int targetSum) {
+        if (array == null || array.length == 0) {
+            return null;
+        }
+
+        int currentSum = array[0];
+        int start = 0;
+
+        for (int end = 1; end <= array.length; end++) {
+            while (currentSum > targetSum && start < end - 1) {
+                currentSum -= array[start];
+                start++;
+            }
+
+            if (currentSum == targetSum) {
+                return new int[]{start, end - 1};
+            }
+
+            if (end < array.length) {
+                currentSum += array[end];
+            }
+        }
+
+        return null; // No subarray found with the given sum
+    }
+}
+nth number in an sequence 
+import java.util.Scanner;
+
+public class NthDigitInSequence {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the value of N: ");
+        int N = scanner.nextInt();
+
+        int result = findNthDigit(N);
+
+        System.out.println("The " + N + "th digit in the sequence is: " + result);
+    }
+
+    public static int findNthDigit(int N) {
+        if (N <= 0) {
+            throw new IllegalArgumentException("Invalid input");
+        }
+
+        int count = 0;
+        int num = 1;
+
+        while (count < N) {
+            String numString = Integer.toString(num);
+            count += numString.length();
+
+            if (count >= N) {
+                int index = N - (count - numString.length()) - 1;
+                return Character.getNumericValue(numString.charAt(index));
+            }
+
+            num++;
+        }
+
+        return -1; // Nth digit not found
+    }
+}
+
